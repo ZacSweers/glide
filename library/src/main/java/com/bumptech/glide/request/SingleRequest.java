@@ -716,6 +716,11 @@ public final class SingleRequest<R>
     onLoadFailed(e, Log.WARN);
   }
 
+  @Override
+  public Object getLock() {
+    return requestLock;
+  }
+
   private void onLoadFailed(GlideException e, int maxLogLevel) {
     stateVerifier.throwIfRecycled();
     synchronized (requestLock) {

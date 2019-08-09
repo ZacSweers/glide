@@ -392,7 +392,7 @@ class EngineJob<R> implements DecodeJob.Callback<R>, Poolable {
     public void run() {
       // Make sure we always acquire the request lock, then the EngineJob lock to avoid deadlock
       // (b/136032534).
-      synchronized (cb) {
+      synchronized (cb.getLock()) {
         synchronized (EngineJob.this) {
           if (cbs.contains(cb)) {
             callCallbackOnLoadFailed(cb);
@@ -416,7 +416,7 @@ class EngineJob<R> implements DecodeJob.Callback<R>, Poolable {
     public void run() {
       // Make sure we always acquire the request lock, then the EngineJob lock to avoid deadlock
       // (b/136032534).
-      synchronized (cb) {
+      synchronized (cb.getLock()) {
         synchronized (EngineJob.this) {
           if (cbs.contains(cb)) {
             // Acquire for this particular callback.
